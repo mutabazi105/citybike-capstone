@@ -1,5 +1,10 @@
 # 🚴 CityBike: Bike-Sharing Analytics Platform
 
+[![CityBike Analytics Pipeline](https://github.com/mutabazi105/citybike-capstone/actions/workflows/test.yml/badge.svg)](https://github.com/mutabazi105/citybike-capstone/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 A comprehensive Python backend platform for analyzing bike-sharing operations. This capstone project demonstrates mastery of object-oriented design, data analysis, algorithms, and professional software engineering practices.
 
 ## 📋 Project Overview
