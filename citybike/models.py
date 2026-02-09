@@ -462,7 +462,7 @@ class MemberUser(User):
                 f"tier={self.tier!r}, active={self.is_active()})")
 
 
-class Trip:
+class Trip(Entity):
     """Represents a bike trip."""
 
     def __init__(self, trip_id: str, user: User, bike: Bike,
@@ -485,8 +485,7 @@ class Trip:
         Raises:
             ValueError: If invalid parameters provided
         """
-        if not trip_id or not isinstance(trip_id, str):
-            raise ValueError("Trip ID must be a non-empty string")
+        super().__init__(trip_id)
 
         if not isinstance(user, User):
             raise ValueError("user must be a User instance")
@@ -512,7 +511,6 @@ class Trip:
         if distance_km <= 0:
             raise ValueError("distance_km must be positive")
 
-        self._trip_id = trip_id
         self._user = user
         self._bike = bike
         self._start_station = start_station
@@ -524,7 +522,7 @@ class Trip:
     @property
     def trip_id(self) -> str:
         """Get trip ID."""
-        return self._trip_id
+        return self.id
 
     @property
     def user(self) -> User:
@@ -568,15 +566,15 @@ class Trip:
         return duration.total_seconds() / 60
 
     def __str__(self) -> str:
-        return (f"Trip {self.trip_id}: {self.user.name} rode {self.distance_km}km "
+        return (f"Trip {self.id}: {self.user.name} rode {self.distance_km}km "
                 f"from {self.start_station.name} to {self.end_station.name}")
 
     def __repr__(self) -> str:
-        return (f"Trip(id={self.trip_id!r}, user={self.user.id!r}, "
+        return (f"Trip(id={self.id!r}, user={self.user.id!r}, "
                 f"bike={self.bike.id!r}, duration={self.duration_minutes:.1f}min)")
 
 
-class MaintenanceRecord:
+class MaintenanceRecord(Entity):
     """Represents a bike maintenance record."""
 
     VALID_TYPES = {
@@ -600,8 +598,7 @@ class MaintenanceRecord:
         Raises:
             ValueError: If invalid parameters provided
         """
-        if not record_id or not isinstance(record_id, str):
-            raise ValueError("Record ID must be a non-empty string")
+        super().__init__(record_id)
 
         if not isinstance(bike, Bike):
             raise ValueError("bike must be a Bike instance")
@@ -616,7 +613,6 @@ class MaintenanceRecord:
         if cost < 0:
             raise ValueError("Cost cannot be negative")
 
-        self._record_id = record_id
         self._bike = bike
         self._date = date
         self._maintenance_type = maintenance_type
@@ -626,7 +622,7 @@ class MaintenanceRecord:
     @property
     def record_id(self) -> str:
         """Get record ID."""
-        return self._record_id
+        return self.id
 
     @property
     def bike(self) -> Bike:
@@ -658,6 +654,6 @@ class MaintenanceRecord:
                 f"(${self.cost:.2f})")
 
     def __repr__(self) -> str:
-        return (f"MaintenanceRecord(id={self.record_id!r}, "
+        return (f"MaintenanceRecord(id={self.id!r}, "
                 f"bike={self.bike.id!r}, type={self.maintenance_type!r}, "
                 f"cost=${self.cost:.2f})")
