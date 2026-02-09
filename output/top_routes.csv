@@ -1,0 +1,11 @@
+start_station,end_station,total_trips
+Harbor View,Central Station,4
+Sports Arena,Central Station,3
+University Campus,West End,3
+Market Square,Sports Arena,3
+City Hall,Central Station,3
+Old Town,Market Square,3
+West End,Market Square,3
+West End,Sports Arena,3
+Central Station,Central Station,2
+City Hall,Sports Arena,2
