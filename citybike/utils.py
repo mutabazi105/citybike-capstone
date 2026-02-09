@@ -17,10 +17,10 @@ DATETIME_REGEX = r'^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$'
 def validate_email(email: str) -> bool:
     """
     Validate email format.
-    
+
     Args:
         email: Email string to validate
-        
+
     Returns:
         True if valid, False otherwise
     """
@@ -32,10 +32,10 @@ def validate_email(email: str) -> bool:
 def validate_date(date_string: str) -> bool:
     """
     Validate date format (YYYY-MM-DD).
-    
+
     Args:
         date_string: Date string to validate
-        
+
     Returns:
         True if valid format, False otherwise
     """
@@ -47,10 +47,10 @@ def validate_date(date_string: str) -> bool:
 def validate_datetime(datetime_string: str) -> bool:
     """
     Validate datetime format (YYYY-MM-DD HH:MM:SS).
-    
+
     Args:
         datetime_string: Datetime string to validate
-        
+
     Returns:
         True if valid format, False otherwise
     """
@@ -62,10 +62,10 @@ def validate_datetime(datetime_string: str) -> bool:
 def parse_datetime(date_string: str) -> Optional[datetime]:
     """
     Parse datetime string to datetime object.
-    
+
     Args:
         date_string: String in format 'YYYY-MM-DD HH:MM:SS'
-        
+
     Returns:
         datetime object or None if parsing fails
     """
@@ -78,10 +78,10 @@ def parse_datetime(date_string: str) -> Optional[datetime]:
 def parse_date(date_string: str) -> Optional[datetime]:
     """
     Parse date string to datetime object.
-    
+
     Args:
         date_string: String in format 'YYYY-MM-DD'
-        
+
     Returns:
         datetime object or None if parsing fails
     """
@@ -94,11 +94,11 @@ def parse_date(date_string: str) -> Optional[datetime]:
 def format_currency(amount: float, currency: str = "€") -> str:
     """
     Format currency value.
-    
+
     Args:
         amount: Numeric amount
         currency: Currency symbol
-        
+
     Returns:
         Formatted currency string
     """
@@ -108,11 +108,11 @@ def format_currency(amount: float, currency: str = "€") -> str:
 def format_distance(distance_km: float, unit: str = "km") -> str:
     """
     Format distance value.
-    
+
     Args:
         distance_km: Distance in kilometers
         unit: Unit of measurement
-        
+
     Returns:
         Formatted distance string
     """
@@ -122,17 +122,17 @@ def format_distance(distance_km: float, unit: str = "km") -> str:
 def format_duration(minutes: float) -> str:
     """
     Format trip duration to readable string.
-    
+
     Args:
         minutes: Duration in minutes
-        
+
     Returns:
         Formatted duration (e.g., "1h 30m")
     """
     total_minutes = int(minutes)
     hours = total_minutes // 60
     mins = total_minutes % 60
-    
+
     if hours > 0:
         return f"{hours}h {mins}m"
     return f"{mins}m"
@@ -141,11 +141,11 @@ def format_duration(minutes: float) -> str:
 def format_percentage(value: float, total: float) -> str:
     """
     Format as percentage.
-    
+
     Args:
         value: Numerator
         total: Denominator
-        
+
     Returns:
         Percentage string (e.g., "45.5%")
     """
@@ -157,22 +157,22 @@ def format_percentage(value: float, total: float) -> str:
 def validate_coordinate(value: float, coord_type: str = "latitude") -> bool:
     """
     Validate geographic coordinate.
-    
+
     Args:
         value: Coordinate value
         coord_type: "latitude" or "longitude"
-        
+
     Returns:
         True if valid, False otherwise
     """
     if not isinstance(value, (int, float)):
         return False
-    
+
     if coord_type.lower() == "latitude":
         return -90 <= value <= 90
     elif coord_type.lower() == "longitude":
         return -180 <= value <= 180
-    
+
     return False
 
 
@@ -183,11 +183,11 @@ def calculate_distance_euclidean(
     """
     Calculate simple Euclidean distance between two coordinates.
     (Simplified flat-earth model, not for real GPS routing)
-    
+
     Args:
         lat1, lon1: First coordinate
         lat2, lon2: Second coordinate
-        
+
     Returns:
         Distance in degrees (scale factor varies by latitude)
     """
@@ -200,12 +200,12 @@ def calculate_distance_euclidean(
 def clamp_value(value: float, min_val: float, max_val: float) -> float:
     """
     Clamp value to range [min_val, max_val].
-    
+
     Args:
         value: Value to clamp
         min_val: Minimum value
         max_val: Maximum value
-        
+
     Returns:
         Clamped value
     """
@@ -219,7 +219,7 @@ class ValidationError(ValueError):
 
 class DataCleaningStrategy:
     """Strategy for handling missing data."""
-    
+
     STRATEGIES = {
         "drop": "Remove rows with missing values",
         "fill_zero": "Fill with 0",
@@ -227,7 +227,7 @@ class DataCleaningStrategy:
         "fill_forward": "Forward fill (for time series)",
         "fill_back": "Backward fill (for time series)",
     }
-    
+
     @staticmethod
     def describe() -> dict:
         """Return available strategies."""

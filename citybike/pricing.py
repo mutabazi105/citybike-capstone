@@ -12,18 +12,18 @@ class PricingStrategy(ABC):
 
     @abstractmethod
     def calculate_fare(self, duration_minutes: float,
-                      distance_km: float,
-                      bike_type: str = "classic",
-                      time_of_day: Optional[datetime] = None) -> float:
+                       distance_km: float,
+                       bike_type: str = "classic",
+                       time_of_day: Optional[datetime] = None) -> float:
         """
         Calculate fare for a trip.
-        
+
         Args:
             duration_minutes: Trip duration in minutes
             distance_km: Trip distance in kilometers
             bike_type: Type of bike ("classic" or "electric")
             time_of_day: Trip start time for time-based pricing
-            
+
         Returns:
             Calculated fare in currency units
         """
@@ -54,9 +54,9 @@ class CasualPricingStrategy(PricingStrategy):
     ELECTRIC_SURCHARGE = 0.20
 
     def calculate_fare(self, duration_minutes: float,
-                      distance_km: float,
-                      bike_type: str = "classic",
-                      time_of_day: Optional[datetime] = None) -> float:
+                       distance_km: float,
+                       bike_type: str = "classic",
+                       time_of_day: Optional[datetime] = None) -> float:
         """Calculate fare for casual user."""
         # Base calculation: minutes * rate
         fare = duration_minutes * self.BASE_RATE_PER_MINUTE
@@ -93,9 +93,9 @@ class MemberPricingStrategy(PricingStrategy):
     ELECTRIC_SURCHARGE = 0.10
 
     def calculate_fare(self, duration_minutes: float,
-                      distance_km: float,
-                      bike_type: str = "classic",
-                      time_of_day: Optional[datetime] = None) -> float:
+                       distance_km: float,
+                       bike_type: str = "classic",
+                       time_of_day: Optional[datetime] = None) -> float:
         """Calculate fare for member."""
         # Free rides up to 45 minutes
         if duration_minutes <= self.UNLIMITED_DURATION:
@@ -136,9 +136,9 @@ class PeakHourPricingStrategy(PricingStrategy):
     MINIMUM_FARE = 1.50
 
     def calculate_fare(self, duration_minutes: float,
-                      distance_km: float,
-                      bike_type: str = "classic",
-                      time_of_day: Optional[datetime] = None) -> float:
+                       distance_km: float,
+                       bike_type: str = "classic",
+                       time_of_day: Optional[datetime] = None) -> float:
         """Calculate fare with peak-hour multiplier."""
         if time_of_day is None:
             time_of_day = datetime.now()
@@ -180,9 +180,9 @@ class DistanceBasedPricingStrategy(PricingStrategy):
     FALLBACK_RATE_PER_MINUTE = 0.15
 
     def calculate_fare(self, duration_minutes: float,
-                      distance_km: float,
-                      bike_type: str = "classic",
-                      time_of_day: Optional[datetime] = None) -> float:
+                       distance_km: float,
+                       bike_type: str = "classic",
+                       time_of_day: Optional[datetime] = None) -> float:
         """Calculate fare based on distance."""
         if distance_km <= 0:
             # Fallback to time-based
@@ -220,13 +220,13 @@ class PricingFactory:
     def create_strategy(strategy_name: str) -> PricingStrategy:
         """
         Create a pricing strategy by name.
-        
+
         Args:
             strategy_name: Name of strategy
-            
+
         Returns:
             PricingStrategy instance
-            
+
         Raises:
             ValueError: If strategy not found
         """
@@ -262,7 +262,7 @@ class TripFareCalculator:
     def __init__(self, strategy: PricingStrategy):
         """
         Initialize with a pricing strategy.
-        
+
         Args:
             strategy: PricingStrategy instance
         """
@@ -274,7 +274,7 @@ class TripFareCalculator:
                   time_of_day: Optional[datetime] = None) -> dict:
         """
         Calculate trip fare and return detailed breakdown.
-        
+
         Returns:
             Dictionary with fare and metadata
         """

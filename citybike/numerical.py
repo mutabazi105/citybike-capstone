@@ -12,16 +12,16 @@ class DistanceCalculator:
 
     @staticmethod
     def euclidean_distance(lat1: float, lon1: float,
-                          lat2: float, lon2: float) -> float:
+                           lat2: float, lon2: float) -> float:
         """
         Calculate Euclidean distance between two points (simplified flat-earth).
-        
+
         Formula: d = sqrt((lat2-lat1)² + (lon2-lon1)²)
-        
+
         Args:
             lat1, lon1: First coordinate
             lat2, lon2: Second coordinate
-            
+
         Returns:
             Distance in degrees (not adjusted for latitude)
         """
@@ -33,10 +33,10 @@ class DistanceCalculator:
     def pairwise_distances(stations_coords: np.ndarray) -> np.ndarray:
         """
         Calculate pairwise distances between all stations.
-        
+
         Args:
             stations_coords: Array of shape (n_stations, 2) with [lat, lon]
-            
+
         Returns:
             Distance matrix of shape (n_stations, n_stations)
         """
@@ -63,14 +63,14 @@ class DistanceCalculator:
 
     @staticmethod
     def nearest_station(from_station_idx: int,
-                       distance_matrix: np.ndarray) -> int:
+                        distance_matrix: np.ndarray) -> int:
         """
         Find nearest station to a given station (excluding itself).
-        
+
         Args:
             from_station_idx: Index of reference station
             distance_matrix: Precomputed distance matrix
-            
+
         Returns:
             Index of nearest station
         """
@@ -86,10 +86,10 @@ class StatisticalAnalyzer:
     def compute_statistics(data: np.ndarray) -> Dict[str, float]:
         """
         Compute comprehensive statistics on a dataset.
-        
+
         Args:
             data: NumPy array of numeric values
-            
+
         Returns:
             Dictionary with statistical measures
         """
@@ -122,14 +122,14 @@ class StatisticalAnalyzer:
 
     @staticmethod
     def percentile_analysis(data: np.ndarray,
-                           percentiles: List[int] = None) -> Dict[int, float]:
+                            percentiles: List[int] = None) -> Dict[int, float]:
         """
         Calculate percentiles for a dataset.
-        
+
         Args:
             data: NumPy array
             percentiles: List of percentile values (0-100)
-            
+
         Returns:
             Dictionary mapping percentile to value
         """
@@ -150,15 +150,15 @@ class OutlierDetection:
 
     @staticmethod
     def zscore_outliers(data: np.ndarray,
-                       threshold: float = 3.0) -> Tuple[np.ndarray, np.ndarray]:
+                        threshold: float = 3.0) -> Tuple[np.ndarray, np.ndarray]:
         """
         Identify outliers using Z-score method.
         Points with |z-score| > threshold are outliers.
-        
+
         Args:
             data: NumPy array of values
             threshold: Z-score threshold (typically 2.0 or 3.0)
-            
+
         Returns:
             Tuple of (outlier_mask, z_scores)
         """
@@ -184,11 +184,11 @@ class OutlierDetection:
                      iqr_multiplier: float = 1.5) -> Tuple[np.ndarray, Dict]:
         """
         Identify outliers using Interquartile Range (IQR) method.
-        
+
         Args:
             data: NumPy array
             iqr_multiplier: Multiplier for IQR (typically 1.5)
-            
+
         Returns:
             Tuple of (outlier_mask, bounds_dict)
         """
@@ -214,15 +214,15 @@ class OutlierDetection:
 
     @staticmethod
     def isolation_forest_scores(data: np.ndarray,
-                               contamination: float = 0.1) -> np.ndarray:
+                                contamination: float = 0.1) -> np.ndarray:
         """
         Simple outlier scoring (not full isolation forest).
         Higher score = more likely to be outlier.
-        
+
         Args:
             data: 1D or 2D NumPy array
             contamination: Expected proportion of outliers
-            
+
         Returns:
             Anomaly scores (0-1, higher = more anomalous)
         """
@@ -254,18 +254,18 @@ class BatchNumericalComputation:
 
     @staticmethod
     def calculate_fares(durations: np.ndarray,
-                       distances: np.ndarray,
-                       rate_per_minute: float = 0.30,
-                       rate_per_km: float = 0.80) -> np.ndarray:
+                        distances: np.ndarray,
+                        rate_per_minute: float = 0.30,
+                        rate_per_km: float = 0.80) -> np.ndarray:
         """
         Vectorized fare calculation.
-        
+
         Args:
             durations: Array of trip durations in minutes
             distances: Array of trip distances in km
             rate_per_minute: €/minute
             rate_per_km: €/km
-            
+
         Returns:
             Array of fare amounts
         """
@@ -282,14 +282,14 @@ class BatchNumericalComputation:
 
     @staticmethod
     def split_by_status(statuses: np.ndarray,
-                       data: np.ndarray) -> Dict[str, np.ndarray]:
+                        data: np.ndarray) -> Dict[str, np.ndarray]:
         """
         Split data by categorical status.
-        
+
         Args:
             statuses: Array of status strings
             data: Array of corresponding data
-            
+
         Returns:
             Dictionary mapping status to data subset
         """
@@ -307,14 +307,14 @@ class BatchNumericalComputation:
 
     @staticmethod
     def group_statistics(group_ids: np.ndarray,
-                        values: np.ndarray) -> Dict[str, Dict]:
+                         values: np.ndarray) -> Dict[str, Dict]:
         """
         Compute statistics per group.
-        
+
         Args:
             group_ids: Array of group identifiers
             values: Array of values
-            
+
         Returns:
             Dictionary mapping group_id -> statistics
         """

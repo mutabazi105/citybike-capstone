@@ -16,7 +16,7 @@ class ChartExporter:
     def __init__(self, output_dir: str = "output/figures"):
         """
         Initialize chart exporter.
-        
+
         Args:
             output_dir: Directory to save PNG files
         """
@@ -26,11 +26,11 @@ class ChartExporter:
     def save_figure(self, fig, filename: str) -> str:
         """
         Save figure to PNG file.
-        
+
         Args:
             fig: Matplotlib figure object
             filename: Filename (without .png extension)
-            
+
         Returns:
             Full path to saved file
         """
@@ -50,16 +50,16 @@ class TripsAnalyticsCharts(ChartExporter):
     """Create charts for trip analysis."""
 
     def chart_trips_per_station(self, trips_df: pd.DataFrame,
-                               stations_df: pd.DataFrame,
-                               top_n: int = 10) -> str:
+                                stations_df: pd.DataFrame,
+                                top_n: int = 10) -> str:
         """
         Create bar chart: Top stations by trip count.
-        
+
         Args:
             trips_df: Trips DataFrame
             stations_df: Stations DataFrame
             top_n: Number of top stations to show
-            
+
         Returns:
             Path to saved figure
         """
@@ -80,12 +80,12 @@ class TripsAnalyticsCharts(ChartExporter):
         for i, bar in enumerate(bars):
             width = bar.get_width()
             ax.text(width, bar.get_y() + bar.get_height() / 2,
-                   f' {int(width)}',
-                   ha='left', va='center', fontweight='bold')
+                    f' {int(width)}',
+                    ha='left', va='center', fontweight='bold')
 
         ax.set_xlabel("Number of Trips", fontsize=12, fontweight='bold')
-        ax.set_title(f"Top {top_n} Most Popular Start Stations", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title(f"Top {top_n} Most Popular Start Stations",
+                     fontsize=14, fontweight='bold')
         ax.invert_yaxis()
         fig.tight_layout()
 
@@ -94,10 +94,10 @@ class TripsAnalyticsCharts(ChartExporter):
     def chart_monthly_trend(self, trips_df: pd.DataFrame) -> str:
         """
         Create line chart: Monthly trip volume trend.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
@@ -114,8 +114,8 @@ class TripsAnalyticsCharts(ChartExporter):
 
         # Create chart
         fig, ax = plt.subplots(figsize=(12, 6))
-        ax.plot(months, counts, marker='o', linewidth=2.5, 
-               markersize=8, color="darkgreen")
+        ax.plot(months, counts, marker='o', linewidth=2.5,
+                markersize=8, color="darkgreen")
         ax.fill_between(months, counts, alpha=0.3, color="green")
 
         # Format x-axis
@@ -125,8 +125,8 @@ class TripsAnalyticsCharts(ChartExporter):
 
         ax.set_xlabel("Month", fontsize=12, fontweight='bold')
         ax.set_ylabel("Number of Trips", fontsize=12, fontweight='bold')
-        ax.set_title("Monthly Trip Volume Trend", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Monthly Trip Volume Trend",
+                     fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3)
         fig.tight_layout()
 
@@ -135,10 +135,10 @@ class TripsAnalyticsCharts(ChartExporter):
     def chart_duration_distribution(self, trips_df: pd.DataFrame) -> str:
         """
         Create histogram: Trip duration distribution.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
@@ -147,17 +147,18 @@ class TripsAnalyticsCharts(ChartExporter):
         durations = trips_df["duration_minutes"].dropna()
 
         fig, ax = plt.subplots(figsize=(12, 6))
-        ax.hist(durations, bins=50, color="coral", edgecolor='black', alpha=0.7)
+        ax.hist(durations, bins=50, color="coral",
+                edgecolor='black', alpha=0.7)
 
         ax.axvline(durations.mean(), color='red', linestyle='--',
-                  linewidth=2, label=f'Mean: {durations.mean():.1f} min')
+                   linewidth=2, label=f'Mean: {durations.mean():.1f} min')
         ax.axvline(durations.median(), color='blue', linestyle='--',
-                  linewidth=2, label=f'Median: {durations.median():.1f} min')
+                   linewidth=2, label=f'Median: {durations.median():.1f} min')
 
         ax.set_xlabel("Duration (minutes)", fontsize=12, fontweight='bold')
         ax.set_ylabel("Frequency", fontsize=12, fontweight='bold')
-        ax.set_title("Trip Duration Distribution", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Trip Duration Distribution",
+                     fontsize=14, fontweight='bold')
         ax.legend(fontsize=10)
         ax.grid(True, alpha=0.3, axis='y')
         fig.tight_layout()
@@ -167,10 +168,10 @@ class TripsAnalyticsCharts(ChartExporter):
     def chart_distance_distribution(self, trips_df: pd.DataFrame) -> str:
         """
         Create histogram: Trip distance distribution.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
@@ -179,17 +180,18 @@ class TripsAnalyticsCharts(ChartExporter):
         distances = trips_df["distance_km"].dropna()
 
         fig, ax = plt.subplots(figsize=(12, 6))
-        ax.hist(distances, bins=40, color="skyblue", edgecolor='black', alpha=0.7)
+        ax.hist(distances, bins=40, color="skyblue",
+                edgecolor='black', alpha=0.7)
 
         ax.axvline(distances.mean(), color='red', linestyle='--',
-                  linewidth=2, label=f'Mean: {distances.mean():.2f} km')
+                   linewidth=2, label=f'Mean: {distances.mean():.2f} km')
         ax.axvline(distances.median(), color='darkgreen', linestyle='--',
-                  linewidth=2, label=f'Median: {distances.median():.2f} km')
+                   linewidth=2, label=f'Median: {distances.median():.2f} km')
 
         ax.set_xlabel("Distance (km)", fontsize=12, fontweight='bold')
         ax.set_ylabel("Frequency", fontsize=12, fontweight='bold')
-        ax.set_title("Trip Distance Distribution", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Trip Distance Distribution",
+                     fontsize=14, fontweight='bold')
         ax.legend(fontsize=10)
         ax.grid(True, alpha=0.3, axis='y')
         fig.tight_layout()
@@ -203,18 +205,20 @@ class UserAnalyticsCharts(ChartExporter):
     def chart_user_type_comparison(self, trips_df: pd.DataFrame) -> str:
         """
         Create box plot: Trip duration by user type.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
         self.apply_style()
 
         # Prepare data
-        casual_durations = trips_df[trips_df["user_type"] == "casual"]["duration_minutes"].dropna()
-        member_durations = trips_df[trips_df["user_type"] == "member"]["duration_minutes"].dropna()
+        casual_durations = trips_df[trips_df["user_type"]
+                                    == "casual"]["duration_minutes"].dropna()
+        member_durations = trips_df[trips_df["user_type"]
+                                    == "member"]["duration_minutes"].dropna()
 
         # Create box plot
         fig, ax = plt.subplots(figsize=(10, 6))
@@ -230,8 +234,8 @@ class UserAnalyticsCharts(ChartExporter):
             patch.set_facecolor(color)
 
         ax.set_ylabel("Duration (minutes)", fontsize=12, fontweight='bold')
-        ax.set_title("Trip Duration by User Type", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Trip Duration by User Type",
+                     fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='y')
         fig.tight_layout()
 
@@ -240,18 +244,20 @@ class UserAnalyticsCharts(ChartExporter):
     def chart_bike_type_comparison(self, trips_df: pd.DataFrame) -> str:
         """
         Create box plot: Trip duration by bike type.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
         self.apply_style()
 
         # Prepare data
-        classic_durations = trips_df[trips_df["bike_type"] == "classic"]["duration_minutes"].dropna()
-        electric_durations = trips_df[trips_df["bike_type"] == "electric"]["duration_minutes"].dropna()
+        classic_durations = trips_df[trips_df["bike_type"]
+                                     == "classic"]["duration_minutes"].dropna()
+        electric_durations = trips_df[trips_df["bike_type"]
+                                      == "electric"]["duration_minutes"].dropna()
 
         # Create box plot
         fig, ax = plt.subplots(figsize=(10, 6))
@@ -267,8 +273,8 @@ class UserAnalyticsCharts(ChartExporter):
             patch.set_facecolor(color)
 
         ax.set_ylabel("Duration (minutes)", fontsize=12, fontweight='bold')
-        ax.set_title("Trip Duration by Bike Type", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Trip Duration by Bike Type",
+                     fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='y')
         fig.tight_layout()
 
@@ -277,10 +283,10 @@ class UserAnalyticsCharts(ChartExporter):
     def chart_trip_status(self, trips_df: pd.DataFrame) -> str:
         """
         Create pie chart: Trip completion vs cancellation.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
@@ -301,14 +307,14 @@ class UserAnalyticsCharts(ChartExporter):
                                           explode=explode,
                                           startangle=90,
                                           textprops={'fontsize': 12,
-                                                   'fontweight': 'bold'})
+                                                     'fontweight': 'bold'})
 
         for autotext in autotexts:
             autotext.set_color('black')
             autotext.set_fontsize(11)
 
-        ax.set_title("Trip Status Distribution", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Trip Status Distribution",
+                     fontsize=14, fontweight='bold')
         fig.tight_layout()
 
         return self.save_figure(fig, "07_trip_status")
@@ -320,32 +326,33 @@ class MaintenanceAnalyticsCharts(ChartExporter):
     def chart_maintenance_cost_by_type(self, maintenance_df: pd.DataFrame) -> str:
         """
         Create bar chart: Maintenance cost by bike type.
-        
+
         Args:
             maintenance_df: Maintenance DataFrame
-            
+
         Returns:
             Path to saved figure
         """
         self.apply_style()
 
         # Sum cost by bike type
-        cost_by_type = maintenance_df.groupby("bike_type")["cost"].sum().sort_values(ascending=False)
+        cost_by_type = maintenance_df.groupby(
+            "bike_type")["cost"].sum().sort_values(ascending=False)
 
         fig, ax = plt.subplots(figsize=(10, 6))
-        bars = ax.bar(cost_by_type.index, cost_by_type.values, 
-                     color=['steelblue', 'coral'])
+        bars = ax.bar(cost_by_type.index, cost_by_type.values,
+                      color=['steelblue', 'coral'])
 
         # Add value labels
         for bar in bars:
             height = bar.get_height()
             ax.text(bar.get_x() + bar.get_width() / 2., height,
-                   f'€{height:.2f}',
-                   ha='center', va='bottom', fontweight='bold')
+                    f'€{height:.2f}',
+                    ha='center', va='bottom', fontweight='bold')
 
         ax.set_ylabel("Total Cost (€)", fontsize=12, fontweight='bold')
-        ax.set_title("Total Maintenance Cost by Bike Type", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Total Maintenance Cost by Bike Type",
+                     fontsize=14, fontweight='bold')
         ax.grid(True, alpha=0.3, axis='y')
         fig.tight_layout()
 
@@ -354,10 +361,10 @@ class MaintenanceAnalyticsCharts(ChartExporter):
     def chart_maintenance_type_distribution(self, maintenance_df: pd.DataFrame) -> str:
         """
         Create bar chart: Maintenance types frequency.
-        
+
         Args:
             maintenance_df: Maintenance DataFrame
-            
+
         Returns:
             Path to saved figure
         """
@@ -373,12 +380,12 @@ class MaintenanceAnalyticsCharts(ChartExporter):
         for i, bar in enumerate(bars):
             width = bar.get_width()
             ax.text(width, bar.get_y() + bar.get_height() / 2,
-                   f' {int(width)}',
-                   ha='left', va='center', fontweight='bold')
+                    f' {int(width)}',
+                    ha='left', va='center', fontweight='bold')
 
         ax.set_xlabel("Number of Records", fontsize=12, fontweight='bold')
-        ax.set_title("Maintenance Records by Type", 
-                    fontsize=14, fontweight='bold')
+        ax.set_title("Maintenance Records by Type",
+                     fontsize=14, fontweight='bold')
         ax.invert_yaxis()
         fig.tight_layout()
 
@@ -391,10 +398,10 @@ class PeakHoursChart(ChartExporter):
     def chart_hourly_usage(self, trips_df: pd.DataFrame) -> str:
         """
         Create line chart: Hourly usage pattern.
-        
+
         Args:
             trips_df: Trips DataFrame
-            
+
         Returns:
             Path to saved figure
         """
@@ -408,19 +415,20 @@ class PeakHoursChart(ChartExporter):
         # Create chart
         fig, ax = plt.subplots(figsize=(14, 6))
         ax.plot(hourly.index, hourly.values, marker='o', linewidth=2.5,
-               markersize=8, color="darkblue")
+                markersize=8, color="darkblue")
         ax.fill_between(hourly.index, hourly.values, alpha=0.3, color="blue")
 
         # Highlight peak hours (8-9am, 5-7pm)
         peak_hours = [8, 17, 18]
         for hour in peak_hours:
             if hour in hourly.index:
-                ax.axvline(hour, color='red', linestyle='--', alpha=0.5, linewidth=1)
+                ax.axvline(hour, color='red', linestyle='--',
+                           alpha=0.5, linewidth=1)
 
         ax.set_xlabel("Hour of Day", fontsize=12, fontweight='bold')
         ax.set_ylabel("Number of Trips", fontsize=12, fontweight='bold')
         ax.set_title("Hourly Usage Pattern (Red lines = Peak Hours)",
-                    fontsize=14, fontweight='bold')
+                     fontsize=14, fontweight='bold')
         ax.set_xticks(range(0, 24))
         ax.grid(True, alpha=0.3)
         fig.tight_layout()
@@ -432,16 +440,16 @@ class SummaryDashboard(ChartExporter):
     """Create summary statistics dashboard."""
 
     def generate_all_charts(self, trips_df: pd.DataFrame,
-                           stations_df: pd.DataFrame,
-                           maintenance_df: pd.DataFrame) -> Dict[str, str]:
+                            stations_df: pd.DataFrame,
+                            maintenance_df: pd.DataFrame) -> Dict[str, str]:
         """
         Generate all required charts.
-        
+
         Args:
             trips_df: Trips DataFrame
             stations_df: Stations DataFrame
             maintenance_df: Maintenance DataFrame
-            
+
         Returns:
             Dictionary mapping chart names to file paths
         """
@@ -453,13 +461,17 @@ class SummaryDashboard(ChartExporter):
             trips_df, stations_df
         )
         charts["Monthly Trend"] = trips_charts.chart_monthly_trend(trips_df)
-        charts["Duration Distribution"] = trips_charts.chart_duration_distribution(trips_df)
-        charts["Distance Distribution"] = trips_charts.chart_distance_distribution(trips_df)
+        charts["Duration Distribution"] = trips_charts.chart_duration_distribution(
+            trips_df)
+        charts["Distance Distribution"] = trips_charts.chart_distance_distribution(
+            trips_df)
 
         # User analytics
         user_charts = UserAnalyticsCharts(self.output_dir)
-        charts["User Type Comparison"] = user_charts.chart_user_type_comparison(trips_df)
-        charts["Bike Type Comparison"] = user_charts.chart_bike_type_comparison(trips_df)
+        charts["User Type Comparison"] = user_charts.chart_user_type_comparison(
+            trips_df)
+        charts["Bike Type Comparison"] = user_charts.chart_bike_type_comparison(
+            trips_df)
         charts["Trip Status"] = user_charts.chart_trip_status(trips_df)
 
         # Maintenance analytics
@@ -473,7 +485,8 @@ class SummaryDashboard(ChartExporter):
 
         # Peak hours
         peak_charts = PeakHoursChart(self.output_dir)
-        charts["Hourly Usage Pattern"] = peak_charts.chart_hourly_usage(trips_df)
+        charts["Hourly Usage Pattern"] = peak_charts.chart_hourly_usage(
+            trips_df)
 
         print(f"\n✓ Generated {len(charts)} charts successfully")
 

@@ -22,10 +22,10 @@ class DataCleaner:
     def clean_trips_csv(df: pd.DataFrame) -> pd.DataFrame:
         """
         Clean trips data.
-        
+
         Args:
             df: Raw trips DataFrame
-            
+
         Returns:
             Cleaned DataFrame
         """
@@ -36,7 +36,8 @@ class DataCleaner:
         df["end_time"] = pd.to_datetime(df["end_time"], errors="coerce")
 
         # Convert numeric columns
-        df["duration_minutes"] = pd.to_numeric(df["duration_minutes"], errors="coerce")
+        df["duration_minutes"] = pd.to_numeric(
+            df["duration_minutes"], errors="coerce")
         df["distance_km"] = pd.to_numeric(df["distance_km"], errors="coerce")
 
         # Remove rows where end_time is before start_time
@@ -54,7 +55,7 @@ class DataCleaner:
         if df["duration_minutes"].isna().any():
             mask = df["duration_minutes"].isna()
             df.loc[mask, "duration_minutes"] = (
-                (df.loc[mask, "end_time"] - 
+                (df.loc[mask, "end_time"] -
                  df.loc[mask, "start_time"]).dt.total_seconds() / 60
             )
 
@@ -116,7 +117,7 @@ class DataCleaner:
         df = df.drop_duplicates(subset=["record_id"], keep="first")
 
         # Remove rows with missing critical fields
-        df = df.dropna(subset=["record_id", "bike_id", "date", 
+        df = df.dropna(subset=["record_id", "bike_id", "date",
                                "maintenance_type", "cost"])
 
         # Validate maintenance type
@@ -141,7 +142,7 @@ class BikeShareSystem:
     def __init__(self, data_dir: str = "citybike/data"):
         """
         Initialize the system.
-        
+
         Args:
             data_dir: Directory containing CSV files
         """
@@ -161,7 +162,7 @@ class BikeShareSystem:
     def load_data(self) -> bool:
         """
         Load raw CSV data.
-        
+
         Returns:
             True if successful
         """
@@ -184,7 +185,7 @@ class BikeShareSystem:
     def clean_data(self) -> bool:
         """
         Clean and validate all datasets.
-        
+
         Returns:
             True if successful
         """
@@ -192,7 +193,8 @@ class BikeShareSystem:
             cleaner = DataCleaner()
 
             self.trips_clean_df = cleaner.clean_trips_csv(self.trips_df)
-            self.stations_clean_df = cleaner.clean_stations_csv(self.stations_df)
+            self.stations_clean_df = cleaner.clean_stations_csv(
+                self.stations_df)
             self.maintenance_clean_df = cleaner.clean_maintenance_csv(
                 self.maintenance_df
             )
@@ -255,8 +257,8 @@ class BikeShareSystem:
         end_counts = trips["end_station_id"].value_counts().head(top_n)
 
         # Map station IDs to names
-        station_map = dict(zip(stations["station_id"], 
-                              stations["station_name"]))
+        station_map = dict(zip(stations["station_id"],
+                               stations["station_name"]))
 
         top_starts = [
             {"station": station_map.get(sid, sid), "trips": int(count)}
@@ -384,7 +386,7 @@ class BikeShareSystem:
         stations = self.stations_clean_df
 
         station_map = dict(zip(stations["station_id"],
-                              stations["station_name"]))
+                               stations["station_name"]))
 
         route_counts = trips.groupby(
             ["start_station_id", "end_station_id"]
@@ -534,7 +536,7 @@ Total Trips: {}
 Total Distance: {} km
 Average Duration: {} minutes
 
-""".format(q1["total_trips"], q1["total_distance_km"], 
+""".format(q1["total_trips"], q1["total_distance_km"],
            q1["average_duration_minutes"])
 
         # Q2: Popular Stations

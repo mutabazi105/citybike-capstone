@@ -14,11 +14,11 @@ def merge_sort(data: List[Any], key: Callable = None) -> List[Any]:
     """
     Merge sort implementation: O(n log n) time complexity.
     Stable sorting algorithm, efficient for large datasets.
-    
+
     Args:
         data: List to sort
         key: Function to extract comparison key from each element
-        
+
     Returns:
         Sorted list
     """
@@ -27,7 +27,7 @@ def merge_sort(data: List[Any], key: Callable = None) -> List[Any]:
 
     # Base case: single element is sorted
     if key is None:
-        key = lambda x: x
+        def key(x): return x
 
     def merge(left: List, right: List) -> List:
         """Merge two sorted lists."""
@@ -59,11 +59,11 @@ def quick_sort(data: List[Any], key: Callable = None) -> List[Any]:
     """
     Quick sort implementation: O(n log n) average, O(n²) worst case.
     Fast in practice for most datasets.
-    
+
     Args:
         data: List to sort
         key: Function to extract comparison key
-        
+
     Returns:
         Sorted list
     """
@@ -71,7 +71,7 @@ def quick_sort(data: List[Any], key: Callable = None) -> List[Any]:
         return data
 
     if key is None:
-        key = lambda x: x
+        def key(x): return x
 
     # Choose pivot (middle element)
     pivot = data[len(data) // 2]
@@ -90,16 +90,16 @@ def bubble_sort(data: List[Any], key: Callable = None) -> List[Any]:
     """
     Bubble sort: O(n²) time complexity.
     Inefficient for large datasets, included for comparison.
-    
+
     Args:
         data: List to sort
         key: Function to extract comparison key
-        
+
     Returns:
         Sorted list
     """
     if key is None:
-        key = lambda x: x
+        def key(x): return x
 
     result = data.copy()
     n = len(result)
@@ -124,12 +124,12 @@ class SortingBenchmark:
                   key: Callable = None) -> Tuple[float, List]:
         """
         Benchmark a sorting algorithm.
-        
+
         Args:
             data: Data to sort
             algorithm_name: "merge", "quick", "bubble", "builtin"
             key: Sorting key function
-            
+
         Returns:
             Tuple of (execution_time_seconds, sorted_result)
         """
@@ -140,7 +140,7 @@ class SortingBenchmark:
         elif algorithm_name == "bubble":
             algo = bubble_sort
         elif algorithm_name == "builtin":
-            algo = lambda d, k: sorted(d, key=k or (lambda x: x))
+            def algo(d, k): return sorted(d, key=k or (lambda x: x))
         else:
             raise ValueError(f"Unknown algorithm: {algorithm_name}")
 
@@ -154,7 +154,7 @@ class SortingBenchmark:
     def compare_algorithms(data: List, key: Callable = None) -> dict:
         """
         Compare all sorting algorithms on the same data.
-        
+
         Returns:
             Dictionary with timing for each algorithm
         """
@@ -176,17 +176,17 @@ def linear_search(data: List, target: Any, key: Callable = None) -> Optional[int
     """
     Linear search: O(n) time complexity.
     Works on unsorted data.
-    
+
     Args:
         data: List to search
         target: Value to find
         key: Function to extract comparison key
-        
+
     Returns:
         Index of target or None if not found
     """
     if key is None:
-        key = lambda x: x
+        def key(x): return x
 
     target_key = key(target) if callable(target) else target
 
@@ -201,17 +201,17 @@ def binary_search(data: List, target: Any, key: Callable = None) -> Optional[int
     """
     Binary search: O(log n) time complexity.
     Requires sorted data!
-    
+
     Args:
         data: Sorted list to search
         target: Value to find
         key: Function to extract comparison key
-        
+
     Returns:
         Index of target or None if not found
     """
     if key is None:
-        key = lambda x: x
+        def key(x): return x
 
     target_key = key(target) if callable(target) else target
     left, right = 0, len(data) - 1
@@ -236,19 +236,19 @@ def binary_search_recursive(data: List, target: Any,
                             right: Optional[int] = None) -> Optional[int]:
     """
     Binary search (recursive implementation).
-    
+
     Args:
         data: Sorted list
         target: Value to find
         key: Comparison key function
         left: Left boundary
         right: Right boundary
-        
+
     Returns:
         Index or None
     """
     if key is None:
-        key = lambda x: x
+        def key(x): return x
 
     if right is None:
         right = len(data) - 1
@@ -276,13 +276,13 @@ class SearchingBenchmark:
                   key: Callable = None) -> Tuple[float, Optional[int]]:
         """
         Benchmark a search algorithm.
-        
+
         Args:
             data: Data to search
             target: Value to find
             algorithm_name: "linear", "binary", "builtin"
             key: Searching key function
-            
+
         Returns:
             Tuple of (execution_time, result_index)
         """
@@ -303,18 +303,19 @@ class SearchingBenchmark:
             raise ValueError(f"Unknown algorithm: {algorithm_name}")
 
         start = time.perf_counter()
-        result = algo(data, target, key) if algorithm_name != "builtin" else algo(data, target, None)
+        result = algo(data, target, key) if algorithm_name != "builtin" else algo(
+            data, target, None)
         end = time.perf_counter()
 
         return (end - start, result)
 
     @staticmethod
     def compare_algorithms(data: List, target: Any,
-                          key: Callable = None) -> dict:
+                           key: Callable = None) -> dict:
         """
         Compare search algorithms on the same data.
         Note: binary searches require sorted data.
-        
+
         Returns:
             Dictionary with timing for each algorithm
         """
