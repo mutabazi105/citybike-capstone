@@ -86,36 +86,6 @@ def quick_sort(data: List[Any], key: Callable = None) -> List[Any]:
     return quick_sort(left, key) + middle + quick_sort(right, key)
 
 
-def bubble_sort(data: List[Any], key: Callable = None) -> List[Any]:
-    """
-    Bubble sort: O(n²) time complexity.
-    Inefficient for large datasets, included for comparison.
-
-    Args:
-        data: List to sort
-        key: Function to extract comparison key
-
-    Returns:
-        Sorted list
-    """
-    if key is None:
-        def key(x): return x
-
-    result = data.copy()
-    n = len(result)
-
-    for i in range(n):
-        swapped = False
-        for j in range(0, n - i - 1):
-            if key(result[j]) > key(result[j + 1]):
-                result[j], result[j + 1] = result[j + 1], result[j]
-                swapped = True
-        if not swapped:
-            break
-
-    return result
-
-
 class SortingBenchmark:
     """Benchmark different sorting algorithms."""
 
@@ -127,7 +97,7 @@ class SortingBenchmark:
 
         Args:
             data: Data to sort
-            algorithm_name: "merge", "quick", "bubble", "builtin"
+            algorithm_name: "merge", "quick", "builtin"
             key: Sorting key function
 
         Returns:
@@ -137,8 +107,7 @@ class SortingBenchmark:
             algo = merge_sort
         elif algorithm_name == "quick":
             algo = quick_sort
-        elif algorithm_name == "bubble":
-            algo = bubble_sort
+
         elif algorithm_name == "builtin":
             def algo(d, k): return sorted(d, key=k or (lambda x: x))
         else:
@@ -159,7 +128,7 @@ class SortingBenchmark:
             Dictionary with timing for each algorithm
         """
         results = {}
-        for algo_name in ["merge", "quick", "bubble", "builtin"]:
+        for algo_name in ["merge", "quick", "builtin"]:
             elapsed, _ = SortingBenchmark.benchmark(
                 data.copy(), algo_name, key
             )
@@ -348,14 +317,7 @@ class ComplexityAnalysis:
     """Big-O complexity documentation and analysis."""
 
     ALGORITHMS = {
-        "bubble_sort": {
-            "best": "O(n)",
-            "average": "O(n²)",
-            "worst": "O(n²)",
-            "space": "O(1)",
-            "stable": True,
-            "description": "Simple but inefficient. Good for learning.",
-        },
+
         "merge_sort": {
             "best": "O(n log n)",
             "average": "O(n log n)",
