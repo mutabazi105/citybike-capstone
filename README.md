@@ -11,6 +11,20 @@ A Python project for analyzing bike-sharing operations.
 - **NumPy** - Statistical analysis and calculations
 - **Visualizations** - 10+ Matplotlib charts
 
+## ✅ Project Milestones
+
+| # | Milestone | Status |
+|---|-----------|--------|
+| 1 | Project Structure & Setup | ✅ Complete |
+| 2 | Domain Models (OOP) | ✅ Complete |
+| 3 | Data Loading & Cleaning | ✅ Complete |
+| 4 | Custom Algorithms | ✅ Complete |
+| 5 | NumPy Numerical Analysis | ✅ Complete |
+| 6 | 14 Business Analytics Queries | ✅ Complete |
+| 7 | Matplotlib Visualizations | ✅ Complete |
+| 8 | Testing & Documentation | ✅ Complete |
+| 9 | Presentation Ready | ✅ Complete |
+
 ## Installation
 
 ```bash
@@ -65,6 +79,15 @@ citybike/
 - numpy
 - matplotlib
 - python-dateutil
+
+## 👨‍💻 Author
+
+**Bernard Turikumana**  
+[GitHub](https://github.com/mutabazi105) | [Project Repository](https://github.com/mutabazi105/citybike-capstone)
+
+## 📄 Project Requirements
+
+See [`Project_Requirements.pdf`](./Project_Requirements.pdf) for complete business and technical specifications.
 
 ## License
 
