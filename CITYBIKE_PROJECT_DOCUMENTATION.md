@@ -105,7 +105,7 @@ The project follows **layered architecture** with clear separation of concerns:
 
 ## Module Breakdown
 
-### 1. models.py - Domain Entities (664 lines)
+### 1. models.py - Domain Entities (667 lines)
 
 **Purpose:** Defines business entities using Object-Oriented Programming
 

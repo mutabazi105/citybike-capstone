@@ -53,7 +53,11 @@ class Bike(Entity):
 
     VALID_STATUSES = {"available", "in_use", "maintenance"}
 
-    def __init__(self, bike_id: str, bike_type: str, status: str = "available"):
+    def __init__(
+            self,
+            bike_id: str,
+            bike_type: str,
+            status: str = "available"):
         """
         Initialize a bike.
 
@@ -103,7 +107,11 @@ class Bike(Entity):
 class ClassicBike(Bike):
     """Classic (non-electric) bike."""
 
-    def __init__(self, bike_id: str, gear_count: int, status: str = "available"):
+    def __init__(
+            self,
+            bike_id: str,
+            gear_count: int,
+            status: str = "available"):
         """
         Initialize a classic bike.
 

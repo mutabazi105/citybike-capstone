@@ -239,7 +239,7 @@ Top Stations:
 Sorting:
   • Merge Sort   - O(n log n) stable
   • Quick Sort   - O(n log n) average
-  • Bubble Sort  - O(n²) simple
+
 
 Searching:
   • Binary Search - O(log n) fast
